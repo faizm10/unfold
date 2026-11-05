@@ -1,0 +1,38 @@
+{
+  "name": "unfold",
+  "version": "0.1.0",
+  "description": "Watch what happens after you hit Enter.",
+  "type": "module",
+  "bin": {
+    "unfold": "bin/unfold.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copy-ui.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "demo:success": "npm run build && node bin/unfold.js demo success",
+    "demo:failure": "npm run build && node bin/unfold.js demo build-failure",
+    "postinstall": "node scripts/postinstall.mjs",
+    "demo:interrupted": "npm run build && node bin/unfold.js demo interrupted"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@xterm/headless": "^5.5.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  },
+  "optionalDependencies": {
+    "node-pty": "1.1.0"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "demos",
+    "scripts/postinstall.mjs",
+    "README.md"
+  ]
+}

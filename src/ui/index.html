@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Unfold</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h6l2 3h8M4 12h10l2 3h4M4 18h14" /></svg>
+        <span class="name">Unfold</span>
+        <span class="tagline">Watch what happens after you hit Enter.</span>
+      </div>
+      <div class="run-meta">
+        <span id="mode" class="badge"></span>
+        <code id="cmd" class="cmd"></code>
+        <span id="status" class="pill"></span>
+        <span id="elapsed" class="elapsed"></span>
+      </div>
+    </header>
+
+    <main>
+      <section id="banner" class="banner" hidden></section>
+
+      <section class="flow-wrap" aria-label="Deploy flow">
+        <nav id="flow" class="flow" role="tablist"></nav>
+        <div class="legend">
+          <span><i class="dot confirmed"></i>Confirmed by this run's output</span>
+          <span><i class="dot active"></i>In progress</span>
+          <span><i class="dot failed"></i>Failed</span>
+          <span><i class="dot unverified"></i>Unverified: output didn't confirm it</span>
+        </div>
+      </section>
+
+      <section id="detail" class="detail" role="tabpanel"></section>
+
+      <section id="logs" class="logs">
+        <div class="logs-bar">
+          <button id="logs-toggle" class="logs-toggle" aria-expanded="false">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" /></svg>
+            Logs <span id="log-count" class="count"></span>
+          </button>
+          <input id="log-filter" type="search" placeholder="Filter lines" aria-label="Filter log lines" />
+          <label class="check"><input id="errors-only" type="checkbox" /> Errors only</label>
+          <label class="check"><input id="follow" type="checkbox" checked /> Follow</label>
+        </div>
+        <ol id="log-lines" class="log-lines" hidden></ol>
+      </section>
+    </main>
+
+    <footer class="foot">
+      <span>Captured locally. Secrets are redacted before anything is shown or saved. Environment variables are never recorded.</span>
+      <span id="saved"></span>
+    </footer>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

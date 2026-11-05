@@ -1,0 +1,331 @@
+{
+ "provider": "vercel",
+ "description": "A preview deploy whose Next.js build fails on a type error.",
+ "command": [
+  "vercel",
+  "deploy",
+  "--logs"
+ ],
+ "cwd": "~/projects/acme-web",
+ "exitCode": 1,
+ "signal": null,
+ "interrupted": false,
+ "chunks": [
+  {
+   "t": 0,
+   "d": "Vercel CLI 65.2.0\r\n"
+  },
+  {
+   "t": 300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 380,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 460,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 540,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 620,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 700,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 780,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 860,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 940,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Retrieving project…"
+  },
+  {
+   "t": 1020,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1100,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1180,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1260,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1340,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1420,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1500,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1580,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1660,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Deploying \u001b[1macme/acme-web\u001b[22m"
+  },
+  {
+   "t": 1780,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Uploading \u001b[0m[--------------------] (0.0KB/184.6KB)"
+  },
+  {
+   "t": 2040,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Uploading \u001b[0m[==------------------] (23.1KB/184.6KB)"
+  },
+  {
+   "t": 2300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Uploading \u001b[0m[=====---------------] (46.1KB/184.6KB)"
+  },
+  {
+   "t": 2560,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Uploading \u001b[0m[=======-------------] (69.2KB/184.6KB)"
+  },
+  {
+   "t": 2820,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Uploading \u001b[0m[==========----------] (92.3KB/184.6KB)"
+  },
+  {
+   "t": 3080,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Uploading \u001b[0m[============--------] (115.4KB/184.6KB)"
+  },
+  {
+   "t": 3340,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Uploading \u001b[0m[===============-----] (138.4KB/184.6KB)"
+  },
+  {
+   "t": 3600,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Uploading \u001b[0m[=================---] (161.5KB/184.6KB)"
+  },
+  {
+   "t": 3860,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Uploading \u001b[0m[====================] (184.6KB/184.6KB)"
+  },
+  {
+   "t": 4160,
+   "d": "\u001b[2K\u001b[1G"
+  },
+  {
+   "t": 4160,
+   "d": "  \u001b[1mInspect         \u001b[22m\u001b[1m\u001b[36mhttps://vercel.com/acme/acme-web/6TfY2pQkzR1mWcN8xLbV3hGd\u001b[39m\u001b[22m\r\n"
+  },
+  {
+   "t": 4180,
+   "d": "  \u001b[1mPreview         \u001b[22m\u001b[1m\u001b[36mhttps://acme-web-7k2m9xq4p-acme.vercel.app\u001b[39m\u001b[22m\r\n"
+  },
+  {
+   "t": 4300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Queued…"
+  },
+  {
+   "t": 4380,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Queued…"
+  },
+  {
+   "t": 4460,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Queued…"
+  },
+  {
+   "t": 4540,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Queued…"
+  },
+  {
+   "t": 4620,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Queued…"
+  },
+  {
+   "t": 4700,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Queued…"
+  },
+  {
+   "t": 4780,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Queued…"
+  },
+  {
+   "t": 4860,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Queued…"
+  },
+  {
+   "t": 4940,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Queued…"
+  },
+  {
+   "t": 5020,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Queued…"
+  },
+  {
+   "t": 5100,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Queued…"
+  },
+  {
+   "t": 5180,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Queued…"
+  },
+  {
+   "t": 5260,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Queued…"
+  },
+  {
+   "t": 5340,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Queued…"
+  },
+  {
+   "t": 5340,
+   "d": "\u001b[2K\u001b[1G"
+  },
+  {
+   "t": 5540,
+   "d": "\u001b[2m2026-11-05T18:04:03.460Z\u001b[22m  Running build in Washington, D.C., USA (East) – iad1\r\n"
+  },
+  {
+   "t": 5680,
+   "d": "\u001b[2m2026-11-05T18:04:04.482Z\u001b[22m  Build machine configuration: 2 cores, 8 GB\r\n"
+  },
+  {
+   "t": 5820,
+   "d": "\u001b[2m2026-11-05T18:04:05.504Z\u001b[22m  Retrieving list of deployment files...\r\n"
+  },
+  {
+   "t": 6120,
+   "d": "\u001b[2m2026-11-05T18:04:07.694Z\u001b[22m  Downloading 41 deployment files...\r\n"
+  },
+  {
+   "t": 6620,
+   "d": "\u001b[2m2026-11-05T18:04:11.344Z\u001b[22m  Restored build cache from previous deployment (9QwErTy2uIoPaSdF)\r\n"
+  },
+  {
+   "t": 6820,
+   "d": "\u001b[2m2026-11-05T18:04:12.804Z\u001b[22m  Running \"vercel build\"\r\n"
+  },
+  {
+   "t": 7120,
+   "d": "\u001b[2m2026-11-05T18:04:14.994Z\u001b[22m  Vercel CLI 65.2.0\r\n"
+  },
+  {
+   "t": 7320,
+   "d": "\u001b[2m2026-11-05T18:04:16.454Z\u001b[22m  Installing dependencies...\r\n"
+  },
+  {
+   "t": 8920,
+   "d": "\u001b[2m2026-11-05T18:04:28.134Z\u001b[22m  added 3 packages, and audited 318 packages in 3s\r\n"
+  },
+  {
+   "t": 9120,
+   "d": "\u001b[2m2026-11-05T18:04:29.594Z\u001b[22m  Detected Next.js version: 16.0.1\r\n"
+  },
+  {
+   "t": 9320,
+   "d": "\u001b[2m2026-11-05T18:04:31.054Z\u001b[22m  Running \"npm run build\"\r\n"
+  },
+  {
+   "t": 9460,
+   "d": "\u001b[2m2026-11-05T18:04:32.076Z\u001b[22m  \r\n"
+  },
+  {
+   "t": 9660,
+   "d": "\u001b[2m2026-11-05T18:04:33.536Z\u001b[22m  > acme-web@0.1.0 build\r\n"
+  },
+  {
+   "t": 9800,
+   "d": "\u001b[2m2026-11-05T18:04:34.558Z\u001b[22m  > next build\r\n"
+  },
+  {
+   "t": 9940,
+   "d": "\u001b[2m2026-11-05T18:04:35.580Z\u001b[22m  \r\n"
+  },
+  {
+   "t": 10340,
+   "d": "\u001b[2m2026-11-05T18:04:38.500Z\u001b[22m     ▲ Next.js 16.0.1\r\n"
+  },
+  {
+   "t": 10540,
+   "d": "\u001b[2m2026-11-05T18:04:39.960Z\u001b[22m     Creating an optimized production build ...\r\n"
+  },
+  {
+   "t": 11440,
+   "d": "\u001b[2m2026-11-05T18:04:46.530Z\u001b[22m  [db] checking migrations with DATABASE_URL=postgres://acme_app:Demo-Pa55-not-real@db.acme.internal:5432/acme\r\n"
+  },
+  {
+   "t": 13240,
+   "d": "\u001b[2m2026-11-05T18:04:59.670Z\u001b[22m   ✓ Compiled successfully in 6.9s\r\n"
+  },
+  {
+   "t": 13440,
+   "d": "\u001b[2m2026-11-05T18:05:01.130Z\u001b[22m     Linting and checking validity of types ...\r\n"
+  },
+  {
+   "t": 14940,
+   "d": "\u001b[2m2026-11-05T18:05:12.080Z\u001b[22m  \u001b[31mFailed to compile.\u001b[39m\r\n"
+  },
+  {
+   "t": 15080,
+   "d": "\u001b[2m2026-11-05T18:05:13.102Z\u001b[22m  \r\n"
+  },
+  {
+   "t": 15100,
+   "d": "\u001b[2m2026-11-05T18:05:13.248Z\u001b[22m  \u001b[31m./app/checkout/page.tsx:42:21\u001b[39m\r\n"
+  },
+  {
+   "t": 15120,
+   "d": "\u001b[2m2026-11-05T18:05:13.394Z\u001b[22m  \u001b[31mType error: Property 'totalCents' does not exist on type 'Cart'. Did you mean 'subtotalCents'?\u001b[39m\r\n"
+  },
+  {
+   "t": 15260,
+   "d": "\u001b[2m2026-11-05T18:05:14.416Z\u001b[22m  \r\n"
+  },
+  {
+   "t": 15280,
+   "d": "\u001b[2m2026-11-05T18:05:14.562Z\u001b[22m    40 |   return (\r\n"
+  },
+  {
+   "t": 15300,
+   "d": "\u001b[2m2026-11-05T18:05:14.708Z\u001b[22m    41 |     <OrderSummary\r\n"
+  },
+  {
+   "t": 15320,
+   "d": "\u001b[2m2026-11-05T18:05:14.854Z\u001b[22m  > 42 |       total={cart.totalCents}\r\n"
+  },
+  {
+   "t": 15340,
+   "d": "\u001b[2m2026-11-05T18:05:15.000Z\u001b[22m       |                   ^\r\n"
+  },
+  {
+   "t": 15360,
+   "d": "\u001b[2m2026-11-05T18:05:15.146Z\u001b[22m    43 |       currency={cart.currency}\r\n"
+  },
+  {
+   "t": 15560,
+   "d": "\u001b[2m2026-11-05T18:05:16.606Z\u001b[22m  \u001b[31mNext.js build worker exited with code: 1 and signal: null\u001b[39m\r\n"
+  },
+  {
+   "t": 15860,
+   "d": "\u001b[2m2026-11-05T18:05:18.796Z\u001b[22m  \u001b[31mError: Command \"npm run build\" exited with 1\u001b[39m\r\n"
+  },
+  {
+   "t": 16560,
+   "d": "\u001b[31mError:\u001b[39m Command \"npm run build\" exited with 1\r\n"
+  }
+ ]
+}

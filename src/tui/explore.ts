@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process';
 import { rankCauses } from '../core/fix-prompt.js';
 import type { FlowState, LogLine, StageState } from '../core/model.js';
 import { padEnd, style, truncate, wrapText, type Style } from './ansi.js';
-import { elapsed, flowLine, focusStage, glyph, outcomeLabel, STATUS_WORD } from './render.js';
+import { commandLabel, elapsed, flowLine, focusStage, glyph, outcomeLabel, STATUS_WORD } from './render.js';
 import { onRestore } from './restore.js';
 
 export type View = 'stage' | 'logs' | 'prompt';
@@ -108,7 +108,7 @@ export function body(m: ExplorerModel, cols: number, s: Style): string[] {
 export function screen(m: ExplorerModel, cols: number, rows: number, s: Style = style(true)): string[] {
   const st = m.state;
   const head = [
-    truncate(` ${s.bold('unfold')} ${s.dim('·')} ${st.command.join(' ')} ${s.dim('·')} ${outcomeLabel(st, s)} ${s.dim(`in ${elapsed(st)}`)}${st.mode !== 'live' ? s.dim(` · ${st.mode}`) : ''}`, cols - 1),
+    truncate(` ${s.bold('unfold')} ${s.dim('·')} ${outcomeLabel(st, s)} ${s.dim(`in ${elapsed(st)}`)}${st.mode !== 'live' ? s.dim(` · ${st.mode}`) : ''} ${s.dim('·')} ${commandLabel(st)}`, cols - 1),
     truncate(` ${flowLine(st, s, { selected: m.view === 'stage' ? st.stages[m.stage]!.id : undefined })}`, cols - 1),
     s.dim('─'.repeat(cols - 1)),
   ];

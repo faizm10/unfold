@@ -67,6 +67,9 @@ export function flowLine(state: FlowState, s: Style, opts: { frame?: number; sel
 
 const stripStamp = (t: string) => t.replace(/^\d{4}-\d{2}-\d{2}T[\d:.]+Z {0,2}/, '');
 
+/** The command as shown in headers: executable base name plus arguments. */
+export const commandLabel = (state: FlowState) => [state.command[0]?.split(/[\\/]/).pop(), ...state.command.slice(1)].join(' ');
+
 /** End-of-run summary printed in the terminal. */
 export function summary(state: FlowState, logs: LogLine[], opts: { cols?: number; s?: Style; webUrl?: string } = {}): string {
   const s = opts.s ?? makeStyle();
@@ -80,7 +83,8 @@ export function summary(state: FlowState, logs: LogLine[], opts: { cols?: number
   };
   const titleW = Math.max(...state.stages.map((x) => x.title.length)) + 2;
 
-  line(`${s.bold('unfold')} ${s.dim('·')} ${state.command.join(' ')} ${s.dim('·')} ${outcomeLabel(state, s)} ${s.dim(`in ${elapsed(state)}`)}`);
+  // Outcome first so it survives truncation; only the command gives way.
+  line(`${s.bold('unfold')} ${s.dim('·')} ${outcomeLabel(state, s)} ${s.dim(`in ${elapsed(state)}`)} ${s.dim('·')} ${commandLabel(state)}`);
   line();
   for (const st of state.stages) {
     const note = st.note ?? st.summary;

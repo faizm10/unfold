@@ -49,6 +49,14 @@ describe('end-of-run summary', () => {
     expect(out).not.toContain('\x1b[');
   });
 
+  it('keeps the outcome visible when the command is very long', () => {
+    const s = run('success');
+    s.state.command = ['/home/runner/work/some/very/long/checkout/path/test/fixtures/fake-vercel.mjs', 'deploy', '--logs', '--scope', 'a-very-long-team-name'];
+    const first = summary(s.state, s.logs, { cols: 60, s: plain }).split('\n')[0]!;
+    expect(first).toMatch(/^unfold · Deployed in [\d.]+s · fake-vercel\.mjs deploy/);
+    expect(width(first)).toBeLessThanOrEqual(60);
+  });
+
   it('shows the URL on success and no fix section', () => {
     const s = run('success');
     const out = summary(s.state, s.logs, { cols: 100, s: plain });

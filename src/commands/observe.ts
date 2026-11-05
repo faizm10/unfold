@@ -1,6 +1,6 @@
 import { spawn } from 'node:child_process';
 import type { Agent } from '../core/fix-prompt.js';
-import { which, type ExitInfo, type TerminalIO } from '../core/launch.js';
+import { terminalMode, which, type ExitInfo, type TerminalIO } from '../core/launch.js';
 import type { RunMode } from '../core/model.js';
 import { Redactor } from '../core/redact.js';
 import { startServer, type UiServer } from '../core/server.js';
@@ -50,7 +50,8 @@ export async function observe(opts: ObserveOptions): Promise<number> {
     mode: opts.mode,
     // Secret-looking env values are matched in memory only; the environment is never saved.
     redactor: new Redactor({ env: opts.mode === 'live' ? process.env : {} }),
-    saveFixPrompt,
+    // Only real runs write files; replays and `show --web` reuse what's saved.
+    saveFixPrompt: opts.save ? saveFixPrompt : undefined,
   });
 
   let recorder: RunRecorder | undefined;
@@ -72,7 +73,8 @@ export async function observe(opts: ObserveOptions): Promise<number> {
   // The live flow panel, pinned below the command's own output.
   const rowsListeners = new Set<(rows: number) => void>();
   const panel =
-    opts.flags.panel && panelSupported()
+    // The panel needs to control the child's terminal size, which only node-pty allows.
+    opts.flags.panel && panelSupported() && (opts.mode !== 'live' || terminalMode() === 'pty')
       ? new LivePanel({ title: [opts.command[0]!.split('/').pop(), ...opts.command.slice(1)].join(' '), onRowsChange: (r) => rowsListeners.forEach((fn) => fn(r)) })
       : undefined;
   if (panel) {

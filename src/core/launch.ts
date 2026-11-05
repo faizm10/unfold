@@ -2,6 +2,7 @@ import { spawn } from 'node:child_process';
 import { chmodSync, existsSync, statSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { delimiter, dirname, isAbsolute, join } from 'node:path';
+import { onRestore } from '../tui/restore.js';
 
 export interface ExitInfo {
   exitCode: number | null;
@@ -46,7 +47,11 @@ export function which(bin: string): string | undefined {
 
 type PtyModule = typeof import('node-pty');
 
+/** `UNFOLD_TERMINAL=script|pipe` forces a fallback (for troubleshooting and tests). */
+const forced = () => process.env.UNFOLD_TERMINAL as 'pty' | 'script' | 'pipe' | undefined;
+
 function loadPty(): PtyModule | undefined {
+  if (forced() === 'script' || forced() === 'pipe') return undefined;
   try {
     const pty = require('node-pty') as PtyModule;
     // node-pty 1.1.0 prebuilds can ship spawn-helper without its execute bit.
@@ -69,7 +74,58 @@ function loadPty(): PtyModule | undefined {
  */
 export function launch(opts: LaunchOptions): Promise<ExitInfo> {
   const pty = loadPty();
-  return pty ? launchPty(pty, opts) : launchPiped(opts);
+  if (pty) return launchPty(pty, opts);
+  if (terminalMode() === 'script') return launchScript(opts);
+  return launchPiped(opts);
+}
+
+/**
+ * How the wrapped command will be attached to the terminal:
+ * - `pty`: node-pty, full control (live panel supported)
+ * - `script`: the system `script` command gives the child a real TTY; used when node-pty
+ *   isn't installed (e.g. Linux without build tools). The panel is off because the child
+ *   sizes itself to the whole terminal.
+ * - `pipe`: no TTY for the child; prompts and spinners may behave differently.
+ */
+export function terminalMode(): 'pty' | 'script' | 'pipe' {
+  if (loadPty()) return 'pty';
+  if (forced() !== 'pipe' && process.platform !== 'win32' && process.stdin.isTTY && which('script')) return 'script';
+  return 'pipe';
+}
+
+const shQuote = (s: string) => (/^[\w@%+=:,./-]+$/.test(s) ? s : `'${s.replace(/'/g, `'\\''`)}'`);
+
+function launchScript({ bin, args, cwd, term: io, onOutput }: LaunchOptions): Promise<ExitInfo> {
+  // BSD/macOS: script -q file cmd args…   util-linux: script -qefc "cmd args…" file
+  const scriptArgs =
+    process.platform === 'darwin' || process.platform.endsWith('bsd')
+      ? ['-q', '/dev/null', bin, ...args]
+      : ['-qefc', [bin, ...args].map(shQuote).join(' '), '/dev/null'];
+  const child = spawn('script', scriptArgs, { cwd, env: process.env, stdio: ['inherit', 'pipe', 'inherit'] });
+  let interrupted = false;
+  const onSignal = (sig: NodeJS.Signals) => {
+    interrupted = true;
+    child.kill(sig);
+  };
+  process.on('SIGINT', onSignal);
+  process.on('SIGTERM', onSignal);
+  // `script` puts the terminal in raw mode itself; make sure it's undone if we die first.
+  const release = onRestore(() => process.stdin.isTTY && process.stdin.setRawMode(false));
+  child.stdout.on('data', (d: Buffer) => {
+    const text = d.toString('utf8');
+    io.write(text);
+    onOutput(text);
+  });
+  return new Promise((resolve) => {
+    child.on('error', (err) => onOutput(`Error: ${err.message}\n`));
+    child.on('close', (code, signal) => {
+      release();
+      process.off('SIGINT', onSignal);
+      process.off('SIGTERM', onSignal);
+      // Ctrl+C reaches the child through the TTY, so infer it from the exit status.
+      resolve({ exitCode: code, signal, interrupted: interrupted || code === 130 || signal === 'SIGINT' });
+    });
+  });
 }
 
 function launchPty(pty: PtyModule, { bin, args, cwd, term: io, onOutput }: LaunchOptions): Promise<ExitInfo> {
@@ -102,6 +158,7 @@ function launchPty(pty: PtyModule, { bin, args, cwd, term: io, onOutput }: Launc
   };
 
   if (stdin.isTTY) stdin.setRawMode(true);
+  const release = onRestore(() => stdin.isTTY && stdin.setRawMode(false));
   stdin.resume();
   stdin.on('data', onInput);
   stdout.on('resize', onResize);
@@ -116,6 +173,7 @@ function launchPty(pty: PtyModule, { bin, args, cwd, term: io, onOutput }: Launc
   return new Promise((resolve) => {
     term.onExit(({ exitCode, signal }) => {
       alive = false;
+      release();
       stdin.off('data', onInput);
       if (stdin.isTTY) stdin.setRawMode(false);
       stdin.pause();
@@ -129,7 +187,7 @@ function launchPty(pty: PtyModule, { bin, args, cwd, term: io, onOutput }: Launc
 }
 
 function launchPiped({ bin, args, cwd, term: io, onOutput }: LaunchOptions): Promise<ExitInfo> {
-  process.stderr.write('[unfold] node-pty unavailable; running without a pseudo-terminal (spinners and prompts may look different).\n');
+  process.stderr.write('[unfold] No pseudo-terminal available (node-pty is not installed); prompts and spinners may look different.\n');
   const child = spawn(bin, args, { cwd, env: process.env, stdio: ['inherit', 'pipe', 'pipe'] });
   let interrupted = false;
   const onSignal = (sig: NodeJS.Signals) => {

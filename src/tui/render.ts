@@ -123,6 +123,17 @@ export function summary(state: FlowState, logs: LogLine[], opts: { cols?: number
     out.push(`  ${s.dim('Codex'.padEnd(8))}${state.fix.commands.codex}`);
   }
 
+  // Output but nothing recognized: likely a CLI format Unfold doesn't know yet.
+  if (state.endedAt && state.lineCount > 3 && state.stages.every((x) => x.status === 'unverified' || x.status === 'pending')) {
+    const version = state.facts.find((f) => f.key === 'cliVersion')?.value;
+    line();
+    for (const l of wrapText(
+      `Unfold didn't recognize any of this output${version ? ` (Vercel CLI ${version})` : ''}, so no stage is confirmed. If this was a normal deploy, please report it at https://github.com/faizm10/unfold/issues.`,
+      cols - 4,
+    ))
+      out.push(`  ${s.yellow(l)}`);
+  }
+
   const unverified = state.stages.filter((x) => x.status === 'unverified').length;
   line();
   line(

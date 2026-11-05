@@ -25,31 +25,32 @@ Use ←/→ to switch stages, `l` for the logs, `e` to jump to the error, `f` fo
 
 A stage is only marked **Confirmed** when the output proves it. If the output can't confirm a stage, it stays **Unverified** (`?`) and Unfold says why. One example: Vercel skips uploading files it already has, so a deploy can finish without the output ever showing an upload. When a deploy fails, you see the stage it failed in, the last confirmed stage, the error, the line most likely to be the cause, and a link to that line in the logs.
 
-## Setup
+## Install
 
-Requires Node 20+.
-
-```sh
-npm install
-npm run build
-npm link        # optional: puts `unfold` on your PATH
-```
-
-## Try the demos (no Vercel account needed)
-
-The demos play recorded terminal output through the same pipeline a real run uses.
+Requires Node.js 20 or later, on macOS or Linux. Windows should work but hasn't been tested yet.
 
 ```sh
-npm run demo:success        # preview deploy that succeeds
-npm run demo:failure        # build fails on a TypeScript error
-npm run demo:interrupted    # Ctrl+C while Vercel is building
+npm install -g unfold-deploy
 ```
 
-Or run `node bin/unfold.js demo build-failure --speed 2`, then `node bin/unfold.js show` to explore it. Press Ctrl+C during any demo to see the interrupted state.
+The package is `unfold-deploy`; the command is `unfold`. To try it without installing, prefix commands with `npx unfold-deploy` (for example `npx unfold-deploy demo success`).
+
+## Try it without a Vercel account
+
+The demos play recorded terminal output through the same pipeline a real run uses:
+
+```sh
+unfold demo success          # a preview deploy that succeeds
+unfold demo build-failure    # the build fails on a TypeScript error
+unfold demo interrupted      # Ctrl+C while Vercel is building
+unfold show                  # explore the run you just watched
+```
+
+Add `--speed 2` to play faster. Press Ctrl+C during any demo to see the interrupted state.
 
 ## Run a real preview deploy
 
-You need the Vercel CLI (`npm i -g vercel`) and `vercel login`. From a project folder:
+You need the Vercel CLI (`npm i -g vercel`) and `vercel login`. Then, from your app's folder (the one with its `package.json`):
 
 ```sh
 cd ~/code/my-app
@@ -86,44 +87,28 @@ The prompt also tells the agent not to deploy and not to change environment vari
 - In `unfold show`, `f` displays the prompt and `c`/`x` copy the Claude/Codex command. The browser view (`--web`) has the same options.
 - `unfold vercel --fix claude` (or `--fix codex`) goes one step further: if the deploy fails, Unfold starts that agent in your project folder with the prompt. Nothing starts on success, and nothing starts unless you pass the flag.
 
-Try it without an account: `node bin/unfold.js demo build-failure`.
+Try it without an account: `unfold demo build-failure`.
 
 ## Privacy
 
 - **Everything stays local.** By default nothing is served at all. With `--web` the page is served on `127.0.0.1` only, and requests for any other host name are rejected. Unfold sends no telemetry.
 - **Secrets are redacted** before any output is shown on the page or saved to disk. This covers tokens, keys, JWTs, `user:password@` in URLs, `KEY=value` pairs with secret-looking names, private key blocks, and `--token` / `--env` flag values. Values of secret-looking environment variables are also matched, in memory only.
 - **The environment is never recorded.** The Vercel CLI inherits it so that your login works, and Unfold doesn't save it.
-- **Saved runs are private to you.** They're written to `~/.unfold/runs/*.jsonl` with mode `0600`, outside your project, so they can't be committed by accident.
+- **Saved runs are private to you.** They're written to `~/.unfold/runs/*.jsonl` with mode `0600`, outside your project, so they can't be committed by accident. The newest 100 runs are kept (`UNFOLD_KEEP_RUNS` changes this). Set `UNFOLD_HOME` to store them elsewhere.
 - Your own terminal shows the CLI's unredacted output, the same as it would without Unfold.
 
-## How it's built
+## Troubleshooting
 
-```
-src/core/          shared and provider-agnostic
-  model.ts         event model: Signal, RunEvent, FlowState
-  terminal.ts      PTY bytes → lines (ANSI, OSC links, spinner redraws)
-  redact.ts        secret redaction
-  flow.ts          reducer: signals → stage states (confirmed / unverified rules)
-  session.ts       decoder → redactor → provider parser → reducer
-  launch.ts        node-pty passthrough (falls back to pipes)
-  server.ts        optional browser view (--web) over Server-Sent Events
-src/tui/           terminal views
-  panel.ts         live panel pinned below the command's output (scroll region)
-  render.ts        flow line and end-of-run summary
-  explore.ts       full-screen explorer (`unfold show`)
-src/providers/
-  provider.ts      the interface a provider implements
-  vercel/          stage text, launch args, and the output parser
-src/ui/            the browser page (plain TypeScript, no framework)
-demos/             recorded transcripts (regenerate: node scripts/make-demos.mjs)
-```
+- **"Could not find vercel on your PATH"**: install it with `npm i -g vercel`, then run `vercel login`.
+- **Stuck at a Vercel question**: Unfold passes your keystrokes straight to the Vercel CLI, so answer it as usual. In scripts, pass `--yes` and `--scope <team>`.
+- **"Unfold didn't recognize any of this output"**: your Vercel CLI may print a format Unfold doesn't know yet. The deploy itself is unaffected. Please open an issue and include your `vercel --version`.
+- **No live panel**: the panel needs a terminal at least 50×12 and the `node-pty` package. On Linux without build tools, node-pty may not install; Unfold then runs the CLI through the system `script` command, prints only the summary, and keeps prompts working. `UNFOLD_TERMINAL=script` or `UNFOLD_TERMINAL=pipe` forces a fallback, and `--no-panel` turns the panel off.
+- **Terminal looks wrong after a crash**: run `reset`. Unfold restores the terminal on normal exits, Ctrl+C and crashes, so please report the crash.
 
-To add a provider such as `gcloud`, add a `src/providers/gcloud/` folder with stage definitions, a `launch()` function and a parser that turns lines into `Signal`s, then register it in `src/providers/index.ts`. Nothing in `core/` needs to change.
+## Contributing
 
-## Tests
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development setup, tests, and how to add a provider such as `gcloud`.
 
-```sh
-npm test
-```
+## License
 
-The tests cover the Vercel parser line by line (the current CLI 65 format and the older emoji format), full demo transcripts end to end, the terminal decoder, and redaction. `test/fixtures/fake-vercel.mjs` is a stand-in CLI you can point Unfold at with `UNFOLD_VERCEL_BIN` to exercise the live terminal path without deploying.
+MIT

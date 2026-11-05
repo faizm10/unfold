@@ -1,9 +1,12 @@
+import { readFileSync } from 'node:fs';
 import { runDemo, DEMO_NAMES } from './commands/demo.js';
 import { DEFAULT_FLAGS, type UiFlags } from './commands/observe.js';
 import { listRuns, runReplay } from './commands/replay.js';
 import { runLive } from './commands/run.js';
 import { runShow } from './commands/show.js';
 import { providers } from './providers/index.js';
+
+const VERSION = (JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { version: string }).version;
 
 const HELP = `unfold — Watch what happens after you hit Enter.
 
@@ -31,6 +34,9 @@ Examples
   unfold demo build-failure
 `;
 
+/** A mistake in how Unfold was invoked: printed without a stack trace. */
+export class UsageError extends Error {}
+
 /** Pulls Unfold's own flags out of argv; everything else goes to the wrapped CLI. */
 export function parseArgs(argv: string[]): { rest: string[]; flags: UiFlags; speed: number } {
   const rest: string[] = [];
@@ -46,7 +52,7 @@ export function parseArgs(argv: string[]): { rest: string[]; flags: UiFlags; spe
     else if (a.startsWith('--port=')) flags.port = Number(a.slice(7));
     else if (a === '--fix' || a.startsWith('--fix=')) {
       const v = a === '--fix' ? argv[++i] : a.slice(6);
-      if (v !== 'claude' && v !== 'codex') throw new Error(`--fix expects "claude" or "codex", got "${v ?? ''}"`);
+      if (v !== 'claude' && v !== 'codex') throw new UsageError(`--fix expects "claude" or "codex", got "${v ?? ''}"`);
       flags.fix = v;
     } else if (a === '--speed') speed = Number(argv[++i]) || 1;
     else if (a.startsWith('--speed=')) speed = Number(a.slice(8)) || 1;
@@ -56,7 +62,21 @@ export function parseArgs(argv: string[]): { rest: string[]; flags: UiFlags; spe
 }
 
 export async function main(argv: string[]): Promise<number> {
+  try {
+    return await run(argv);
+  } catch (err) {
+    if (!(err instanceof UsageError)) throw err;
+    process.stderr.write(`unfold: ${err.message}\nRun \`unfold --help\` for usage.\n`);
+    return 2;
+  }
+}
+
+async function run(argv: string[]): Promise<number> {
   const [cmd, ...tail] = argv;
+  if (cmd === '-v' || cmd === '--version' || cmd === 'version') {
+    process.stdout.write(VERSION + '\n');
+    return 0;
+  }
   if (!cmd || cmd === '-h' || cmd === '--help' || cmd === 'help') {
     process.stdout.write(HELP);
     return 0;
@@ -79,7 +99,6 @@ export async function main(argv: string[]): Promise<number> {
       for (const r of listRuns()) process.stdout.write(r + '\n');
       return 0;
     default:
-      process.stderr.write(`Unknown command "${cmd}".\n\n${HELP}`);
-      return 2;
+      throw new UsageError(`unknown command "${cmd}". Supported: ${[...Object.keys(providers), 'show', 'demo', 'replay', 'runs'].join(', ')}.`);
   }
 }

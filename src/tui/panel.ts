@@ -6,6 +6,7 @@
 import type { FlowState } from '../core/model.js';
 import { style, truncate, width, type Style } from './ansi.js';
 import { elapsed, flowLine, focusStage, outcomeLabel } from './render.js';
+import { onRestore } from './restore.js';
 
 const HEIGHT = 3;
 const ESC = '\x1b';
@@ -32,6 +33,7 @@ export class LivePanel {
   /** True while the last child chunk ended inside an escape sequence. */
   private midEscape = false;
   private dirty = false;
+  private releaseRestore: (() => void) | undefined;
 
   constructor(private readonly opts: PanelOptions) {
     this.out = opts.out ?? process.stdout;
@@ -46,6 +48,7 @@ export class LivePanel {
   start(): void {
     if (this.active) return;
     this.active = true;
+    this.releaseRestore = onRestore(() => this.out.write(`${ESC}[r${ESC}[0m\r\n`));
     // Make room: scroll existing content up so the panel doesn't cover it.
     this.out.write('\n'.repeat(HEIGHT) + `${ESC}[${HEIGHT}A`);
     this.setRegion();
@@ -86,6 +89,7 @@ export class LivePanel {
     for (let r = rows - HEIGHT + 1; r <= rows; r++) seq += `${ESC}[${r};1H${ESC}[2K`;
     seq += `${ESC}[r${ESC}8\r\n`;
     this.out.write(seq);
+    this.releaseRestore?.();
     this.opts.onRowsChange?.(this.childRows);
   }
 

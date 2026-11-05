@@ -4,6 +4,7 @@ import { rankCauses } from '../core/fix-prompt.js';
 import type { FlowState, LogLine, StageState } from '../core/model.js';
 import { padEnd, style, truncate, wrapText, type Style } from './ansi.js';
 import { elapsed, flowLine, focusStage, glyph, outcomeLabel, STATUS_WORD } from './render.js';
+import { onRestore } from './restore.js';
 
 export type View = 'stage' | 'logs' | 'prompt';
 
@@ -194,7 +195,12 @@ export function explore(state: FlowState, logs: LogLine[]): Promise<void> {
       else if (/^[1-9]$/.test(k) && Number(k) <= state.stages.length) ((m.stage = Number(k) - 1), (m.view = 'stage'), (m.scroll = 0));
       draw();
     };
+    const release = onRestore(() => {
+      if (stdin.isTTY) stdin.setRawMode(false);
+      out.write('\x1b[?25h\x1b[?1049l');
+    });
     const finish = () => {
+      release();
       stdin.off('data', onKey);
       out.off('resize', draw);
       if (msgTimer) clearTimeout(msgTimer);

@@ -90,7 +90,7 @@ function renderHeader(s: FlowState): void {
   mode.className = `badge ${s.mode}`;
   const status = $('status');
   status.className = `pill ${s.outcome}`;
-  status.textContent = { running: 'Running', success: s.stages.at(-1)?.status === 'confirmed' ? 'Deployed' : 'Exited 0', failure: 'Failed', interrupted: 'Stopped' }[s.outcome];
+  status.textContent = { running: 'Running', success: s.stages.at(-1)?.status === 'confirmed' ? (s.notes?.success ?? 'Done') : 'Exited 0', failure: 'Failed', interrupted: 'Stopped' }[s.outcome];
   $('saved').replaceChildren(...(s.savedTo ? ['Saved to ', h('code', {}, s.savedTo)] : s.mode === 'demo' ? ['Demo data: recorded output, nothing is sent anywhere.'] : []));
   document.title = `${status.textContent} · Unfold`;
 }
@@ -128,7 +128,7 @@ function extLink(href: string, label: string): HTMLAnchorElement {
 function renderBanner(s: FlowState): void {
   const el = $('banner');
   const title = (id?: string) => s.stages.find((st) => st.id === id)?.title ?? 'none';
-  const inspect = fact(s, 'inspectUrl');
+  const inspect = fact(s, 'inspectUrl') ?? fact(s, 'logsUrl');
   if (s.outcome === 'running') {
     el.hidden = true;
     return;
@@ -140,7 +140,7 @@ function renderBanner(s: FlowState): void {
     const cause = causes(s)[0];
     fill(
       el,
-      h('h2', {}, `Deploy failed during ${title(s.failedStage)}`),
+      h('h2', {}, `Failed during ${title(s.failedStage)}`),
       h('p', {}, `Last confirmed stage: ${title(s.lastConfirmed)}. Exit code ${s.exitCode ?? s.exitSignal ?? 'unknown'}.`),
       err ? h('div', { class: 'err' }, err.message) : h('p', {}, 'The command failed without printing a recognizable error. Check the logs.'),
       cause ? h('p', {}, 'Most relevant output: ', h('code', {}, cause.message)) : null,
@@ -149,7 +149,7 @@ function renderBanner(s: FlowState): void {
         { class: 'actions' },
         h('button', { class: 'btn primary', onclick: () => jumpTo((cause ?? err)?.seq) }, 'Jump to the error in the logs'),
         h('button', { class: 'btn', onclick: () => select(s.failedStage) }, `Open the ${title(s.failedStage)} stage`),
-        inspect && inspect.href ? extLink(inspect.href, 'Full logs on Vercel') : null,
+        inspect && inspect.href ? extLink(inspect.href, `Open ${inspect.label}`) : null,
       ),
       s.fix ? fixPanel(s) : null,
     );
@@ -158,7 +158,7 @@ function renderBanner(s: FlowState): void {
     const live = s.stages.at(-1)?.status === 'confirmed';
     fill(
       el,
-      h('h2', {}, live ? 'Preview is ready' : 'Command finished, deploy not confirmed'),
+      h('h2', {}, live ? (s.notes?.successHeadline ?? 'Finished') : 'Command finished, but its output never confirmed the last stage'),
       live ? null : h('p', {}, "The command exited with code 0, but its output never confirmed the deployment went live."),
       url?.href ? h('a', { class: 'live-url', href: url.href, target: '_blank', rel: 'noreferrer noopener' }, url.value) : h('p', {}, 'The command succeeded.'),
       fact(s, 'protection') ? h('p', {}, 'Deployment Protection is on, so visitors may need to sign in to Vercel.') : null,
@@ -166,15 +166,15 @@ function renderBanner(s: FlowState): void {
         'div',
         { class: 'actions' },
         url?.value ? h('button', { class: 'btn', onclick: (e) => copy(url.value, e.currentTarget as HTMLButtonElement) }, 'Copy URL') : null,
-        inspect?.href ? extLink(inspect.href, 'Inspect on Vercel') : null,
+        inspect?.href ? extLink(inspect.href, `Open ${inspect.label}`) : null,
       ),
     );
   } else {
     fill(
       el,
       h('h2', {}, 'Stopped with Ctrl+C'),
-      h('p', {}, `Last confirmed stage: ${title(s.lastConfirmed)}. ${inspect ? 'The deployment had already been created, so Vercel may still finish building it.' : 'No deployment had been created yet.'}`),
-      h('div', { class: 'actions' }, inspect?.href ? extLink(inspect.href, 'Check it on Vercel') : null, h('button', { class: 'btn', onclick: () => openLogs(true) }, 'View logs')),
+      h('p', {}, `Last confirmed stage: ${title(s.lastConfirmed)}. ${s.stages.find((st) => st.status === 'unverified' && st.note)?.note ?? ''}`),
+      h('div', { class: 'actions' }, inspect?.href ? extLink(inspect.href, `Open ${inspect.label}`) : null, h('button', { class: 'btn', onclick: () => openLogs(true) }, 'View logs')),
     );
   }
 }
@@ -294,7 +294,7 @@ function renderDetail(s: FlowState): void {
     h('p', { class: 'summary' }, st.summary),
     ...st.explanation.map((p) => h('p', {}, p)),
     h('p', { class: 'confirm' }, h('b', {}, 'What would confirm it: '), st.confirmedBy),
-    st.docsUrl ? h('a', { href: st.docsUrl, target: '_blank', rel: 'noreferrer noopener' }, 'Vercel docs') : null,
+    st.docsUrl ? h('a', { href: st.docsUrl, target: '_blank', rel: 'noreferrer noopener' }, s.notes?.docsLabel ?? 'Docs') : null,
   );
 
   $('detail').setAttribute('aria-labelledby', `tab-${st.id}`);

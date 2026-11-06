@@ -27,6 +27,7 @@ export class Session {
   readonly reducer = new FlowReducer();
   readonly runId: string;
   private readonly parser: ProviderParser;
+  private readonly present: ((line: string) => string | null) | undefined;
   private readonly decoder: TerminalDecoder;
   private readonly redactor: Redactor;
   private readonly listeners = new Set<Listener>();
@@ -38,9 +39,10 @@ export class Session {
   constructor(private readonly opts: SessionOptions) {
     this.now = opts.now ?? Date.now;
     this.runId = new Date(this.now()).toISOString().replace(/[:.]/g, '-') + '-' + randomBytes(3).toString('hex');
-    this.parser = opts.provider.createParser();
+    this.parser = opts.provider.createParser({ cwd: opts.cwd });
     this.redactor = opts.redactor ?? new Redactor();
-    this.decoder = new TerminalDecoder((l) => this.onLine(l));
+    this.present = opts.provider.createPresenter?.({ cwd: opts.cwd });
+    this.decoder = new TerminalDecoder((l) => this.onLine(l), opts.provider.maxLineLength);
   }
 
   get state(): FlowState {
@@ -72,6 +74,21 @@ export class Session {
     });
   }
 
+  /**
+   * Replays an already-processed event (log, signal, fix) from a saved run. Used for
+   * providers whose raw output isn't saved, such as JSON event streams.
+   */
+  inject(event: RunEvent): void {
+    if (event.type === 'log' || event.type === 'signal' || event.type === 'fix.ready') this.emit(event);
+  }
+
+  /** Ends a replayed run without re-running the parser. */
+  endReplay(exitCode: number | null, signal: string | null, interrupted: boolean): void {
+    if (this.ended) return;
+    this.ended = true;
+    this.emit({ type: 'run.ended', at: this.now(), exitCode, signal, interrupted });
+  }
+
   /** Feed raw terminal output (may contain partial lines and escape codes). */
   write(chunk: string): void {
     if (!this.ended) this.decoder.write(chunk);
@@ -81,6 +98,9 @@ export class Session {
     if (this.ended) return;
     this.decoder.end();
     this.ended = true;
+    const at = this.now();
+    const seq = this.last?.line.seq ?? 0;
+    for (const signal of this.parser.finish?.() ?? []) this.emit({ type: 'signal', at, seq, signal });
     this.emit({ type: 'run.ended', at: this.now(), exitCode, signal, interrupted });
 
     const prompt = buildFixPrompt(this.state, this.logs, this.opts.provider.fixHints?.(this.state) ?? []);
@@ -96,9 +116,18 @@ export class Session {
   }
 
   private onLine({ text: rawText, transient }: DecodedLine): void {
-    const text = this.redactor.line(rawText);
-    const key = redrawKey(text);
+    const raw = this.redactor.line(rawText);
     const at = this.now();
+    const shown = this.present ? this.present(raw) : raw;
+    if (shown === null) {
+      // Hidden line (e.g. a structured event with nothing to show): its signals attach
+      // to the last visible line.
+      const seq = this.last?.line.seq ?? 0;
+      for (const signal of this.parser.feed({ seq, at, text: raw })) this.emit({ type: 'signal', at, seq, signal });
+      return;
+    }
+    const text = shown;
+    const key = redrawKey(text);
     let line: LogLine;
     // A redrawn spinner/progress line replaces the previous one instead of piling up.
     if (this.last?.transient && this.last.key === key) {
@@ -112,7 +141,7 @@ export class Session {
     }
     this.last = { line, transient, key };
     this.emit({ type: 'log', line });
-    for (const signal of this.parser.feed(line)) this.emit({ type: 'signal', at, seq: line.seq, signal });
+    for (const signal of this.parser.feed({ ...line, text: raw })) this.emit({ type: 'signal', at, seq: line.seq, signal });
   }
 
   private emit(event: RunEvent): void {

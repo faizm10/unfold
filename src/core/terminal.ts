@@ -23,7 +23,10 @@ export class TerminalDecoder {
   private csiParams = '';
   private pendingCR = false;
 
-  constructor(private readonly emit: (line: DecodedLine) => void) {}
+  constructor(
+    private readonly emit: (line: DecodedLine) => void,
+    private readonly maxLine = MAX_LINE,
+  ) {}
 
   write(chunk: string): void {
     for (const ch of chunk) this.char(ch);
@@ -84,7 +87,7 @@ export class TerminalDecoder {
     } else if (ch === '\t') {
       this.buf += '  ';
     } else if (ch >= ' ' || ch > '\x7f') {
-      if (this.buf.length < MAX_LINE) this.buf += ch;
+      if (this.buf.length < this.maxLine) this.buf += ch;
     }
   }
 

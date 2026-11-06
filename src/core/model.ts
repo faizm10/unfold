@@ -28,7 +28,7 @@ export interface LogLine {
 
 /** What a provider parser can claim about a single log line. */
 export type Signal =
-  | { kind: 'stage'; stage: string; status: 'active' | 'confirmed' | 'failed'; note: string }
+  | { kind: 'stage'; stage: string; status: 'active' | 'confirmed' | 'failed' | 'unverified'; note: string }
   | { kind: 'evidence'; stage: string; note: string }
   | { kind: 'fact'; key: string; label: string; value: string; stage?: string; href?: string }
   /**
@@ -65,6 +65,14 @@ export interface FixPrompt {
 }
 
 export interface ProviderNotes {
+  /** Word for a run that finished and was confirmed, e.g. "Deployed" or "Done". */
+  success?: string;
+  /** Headline when it finished, e.g. "Preview is ready". */
+  successHeadline?: string;
+  /** Link label for the provider's docs. */
+  docsLabel?: string;
+  /** Fact keys worth showing in the end-of-run summary, in order. */
+  highlights?: string[];
   /** Shown on the stage that was in progress when the user pressed Ctrl+C. */
   interrupted?: string;
   /** Shown on stages the output never confirmed. */
@@ -127,4 +135,5 @@ export interface FlowState {
   lineCount: number;
   savedTo?: string;
   fix?: FixPrompt;
+  notes?: ProviderNotes;
 }

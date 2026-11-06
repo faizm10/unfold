@@ -2,7 +2,14 @@
 
 **Watch what happens after you hit Enter.**
 
-Unfold wraps a CLI command and shows what it's doing as a flow, right in your terminal. The command's own output and prompts work exactly as before, and a small panel pinned to the bottom of the terminal tracks each stage as it happens. It starts with one workflow: a Vercel preview deploy.
+Unfold wraps a CLI command and shows what it's doing as a flow, right in your terminal. The command's own output and prompts work exactly as before, and a small panel pinned to the bottom of the terminal tracks each stage as it happens.
+
+| Command | Wraps | Flow |
+| --- | --- | --- |
+| `unfold vercel` | `vercel deploy` | Prepare → Upload → Build → Preview |
+| `unfold gcloud` | `gcloud run deploy` (Cloud Run) | Prepare → Build → Deploy → Live |
+| `unfold claude "<task>"` | Claude Code, non-interactive | Start → Explore → Change → Verify → Done |
+| `unfold codex "<task>"` | Codex CLI, non-interactive | Start → Explore → Change → Verify → Done |
 
 ```
 Vercel CLI 65.2.0
@@ -35,15 +42,19 @@ npm install -g unfold-deploy
 
 The package is `unfold-deploy`; the command is `unfold`. To try it without installing, prefix commands with `npx unfold-deploy` (for example `npx unfold-deploy demo success`).
 
-## Try it without a Vercel account
+## Try it without an account
 
 The demos play recorded terminal output through the same pipeline a real run uses:
 
 ```sh
-unfold demo success          # a preview deploy that succeeds
-unfold demo build-failure    # the build fails on a TypeScript error
-unfold demo interrupted      # Ctrl+C while Vercel is building
-unfold show                  # explore the run you just watched
+unfold demo success                  # Vercel: a preview deploy that succeeds
+unfold demo build-failure            # Vercel: the build fails on a TypeScript error
+unfold demo interrupted              # Vercel: Ctrl+C while building
+unfold demo gcloud success           # Cloud Run: a source deploy that goes live
+unfold demo gcloud deploy-failure    # Cloud Run: the container never listens on $PORT
+unfold demo claude success           # Claude Code fixes a failing test and confirms it
+unfold demo codex checks-failing     # Codex finishes, but the tests still fail
+unfold show                          # explore the run you just watched
 ```
 
 Add `--speed 2` to play faster. Press Ctrl+C during any demo to see the interrupted state.
@@ -66,6 +77,31 @@ unfold vercel --yes           # any vercel deploy flags pass straight through
 - Every run is saved. `unfold show` explores the latest one, `unfold show <run-id>` an older one, and `unfold runs` lists them.
 
 Unfold options: `--fix claude|codex` (see below), `--no-panel` (no pinned panel, summary only), `--speed <n>` (demos and replays).
+
+## Deploy to Cloud Run
+
+You need the Google Cloud CLI, logged in (`gcloud auth login`) with a project set. From your service's folder:
+
+```sh
+unfold gcloud --source . --region us-central1      # runs: gcloud run deploy --source . --region us-central1
+unfold gcloud my-api --image us-docker.pkg.dev/…   # prebuilt image: no Build stage
+```
+
+Everything after `unfold gcloud` goes to `gcloud run deploy`, and its questions (service name, region, unauthenticated access) still appear in your terminal. On failure the summary shows the error, the Cloud Build or revision logs link, and the troubleshooting link gcloud printed. HTML error pages gcloud sometimes prints are reduced to their readable sentence.
+
+## Watch a coding agent: Claude Code and Codex
+
+Unfold runs the agent in its non-interactive mode, which reports every step as a structured event, and shows it as a flow: what it read (**Explore**), which files it edited (**Change**), whether checks such as `npm test` or `tsc` passed (**Verify**), and its final answer (**Done**). The summary lists the files changed, the answer, and the cost or token use.
+
+```sh
+unfold claude "fix the failing test" --allowedTools Read Edit "Bash(npm test)"
+unfold claude "add input validation to the signup form" --permission-mode acceptEdits
+unfold codex "fix the failing test" --sandbox workspace-write
+```
+
+- Non-interactive agents can't stop to ask for permission. Give Claude Code the tools it needs with `--allowedTools` or `--permission-mode acceptEdits`; give Codex write access with `--sandbox workspace-write`. Denied tools are listed in the summary.
+- **Verify is only confirmed when a check passes.** If the agent never runs one, or the last one failed, Verify stays `?` with the reason, even when the agent says it's done.
+- Edits go straight to your working tree. Review them with `git diff`.
 
 ### Browser view (optional)
 
@@ -99,7 +135,8 @@ Try it without an account: `unfold demo build-failure`.
 
 ## Troubleshooting
 
-- **"Could not find vercel on your PATH"**: install it with `npm i -g vercel`, then run `vercel login`.
+- **"Could not find vercel / gcloud / claude / codex on your PATH"**: install that CLI and log in to it first; Unfold prints the install command.
+- **Agent stopped without changing anything**: it probably wasn't allowed to. Check "Permission denied" in the summary and allow the tool (see above).
 - **Stuck at a Vercel question**: Unfold passes your keystrokes straight to the Vercel CLI, so answer it as usual. In scripts, pass `--yes` and `--scope <team>`.
 - **"Unfold didn't recognize any of this output"**: your Vercel CLI may print a format Unfold doesn't know yet. The deploy itself is unaffected. Please open an issue and include your `vercel --version`.
 - **No live panel**: the panel needs a terminal at least 50×12 and the `node-pty` package. On Linux without build tools, node-pty may not install; Unfold then runs the CLI through the system `script` command, prints only the summary, and keeps prompts working. `UNFOLD_TERMINAL=script` or `UNFOLD_TERMINAL=pipe` forces a fallback, and `--no-panel` turns the panel off.

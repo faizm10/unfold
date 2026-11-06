@@ -1,7 +1,7 @@
 import type { ErrorInfo, FlowState, LogLine, ProviderNotes, RunEvent, StageState } from './model.js';
 
 const MAX_EVIDENCE = 40;
-const DEFAULT_NOTES: Required<ProviderNotes> = {
+const DEFAULT_NOTES: Required<Pick<ProviderNotes, 'interrupted' | 'unverified'>> & ProviderNotes = {
   interrupted: 'You pressed Ctrl+C while this stage was in progress, so its outcome was never reported.',
   unverified: "This run's output never confirmed this stage.",
 };
@@ -16,7 +16,7 @@ const DEFAULT_NOTES: Required<ProviderNotes> = {
 export class FlowReducer {
   state: FlowState | undefined;
   readonly logs = new Map<number, LogLine>();
-  private notes: Required<ProviderNotes> = DEFAULT_NOTES;
+  private notes = DEFAULT_NOTES;
 
   apply(event: RunEvent): void {
     if (event.type === 'run.started') {
@@ -34,6 +34,7 @@ export class FlowReducer {
         exitCode: null,
         exitSignal: null,
         stages: event.stages.map((d) => ({ ...d, status: 'pending', evidence: [] })),
+        notes: event.notes,
         facts: [],
         errors: [],
         lineCount: 0,
@@ -97,6 +98,12 @@ export class FlowReducer {
             st.endedAt = e.at;
             st.note = sig.note;
           }
+        } else if (sig.status === 'unverified') {
+          // A parser saying "this happened but didn't succeed" (e.g. checks ran and failed).
+          if (st.status === 'pending' || st.status === 'active') {
+            st.status = 'unverified';
+            st.note = sig.note;
+          }
         } else if (st.status !== 'confirmed') {
           st.status = 'failed';
           st.endedAt = e.at;
@@ -125,9 +132,11 @@ export class FlowReducer {
         if (sig.severity === 'fatal') {
           const st = this.stage(s, sig.stage) ?? this.currentStage(s);
           if (st && st.status !== 'confirmed') {
+            // Keep a note the parser already gave the failure (e.g. "Creating Revision failed.");
+            // the full message is shown as the error.
+            if (st.status !== 'failed' || !st.note) st.note = sig.message;
             st.status = 'failed';
             st.endedAt = e.at;
-            st.note = sig.message;
             s.failedStage = st.id;
             info.stage = st.id;
             this.addEvidence(st, e.seq, e.at, 'Error reported here');

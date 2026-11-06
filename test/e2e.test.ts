@@ -71,7 +71,7 @@ describe.runIf(canRun)('unfold vercel in a real terminal', () => {
     const r = await runInTerminal(['vercel'], {}, [[2000, '\x03']]);
     expect(r.exitCode).toBe(130);
     expect(r.all).toMatch(/Stopped in [\d.]+s/);
-    expect(r.all).toContain('Vercel may still finish it');
+    expect(r.all).toContain('Vercel may keep building it');
   }, 30_000);
 
   it('works without node-pty through the `script` fallback', async () => {

@@ -1,0 +1,9 @@
+{"type": "system", "subtype": "init", "cwd": "/work/agent", "model": "claude-opus-5-5", "permissionMode": "default", "claude_code_version": "2.1.292"}
+{"type": "assistant", "message": {"content": [{"type": "tool_use", "id": "toolu_01XZ3FLgzbP3vpLFtQ53M6iF", "name": "Read", "input": {"file_path": "/work/agent/hello.txt"}, "caller": {"type": "direct"}}]}}
+{"type": "user", "message": {"content": [{"tool_use_id": "toolu_01XZ3FLgzbP3vpLFtQ53M6iF", "type": "tool_result", "content": "1\tbanana split is tasty\n2\tsecond line\n3\t"}]}}
+{"type": "assistant", "message": {"content": [{"type": "tool_use", "id": "toolu_01VDyRD8n9TtnRayadurMDQX", "name": "Edit", "input": {"replace_all": false, "file_path": "/work/agent/hello.txt", "old_string": "second line", "new_string": "line two"}, "caller": {"type": "direct"}}]}}
+{"type": "user", "message": {"content": [{"tool_use_id": "toolu_01VDyRD8n9TtnRayadurMDQX", "type": "tool_result", "content": "The file /work/agent/hello.txt has been updated successfully. (file state is current in your context — no need to Read it back)"}]}}
+{"type": "assistant", "message": {"content": [{"type": "tool_use", "id": "toolu_01PhX3PJfKNSX4748ys9QGKX", "name": "Bash", "input": {"command": "false", "description": "Run the false command"}, "caller": {"type": "direct"}}]}}
+{"type": "user", "message": {"content": [{"type": "tool_result", "content": "Exit code 1", "is_error": true, "tool_use_id": "toolu_01PhX3PJfKNSX4748ys9QGKX"}]}}
+{"type": "assistant", "message": {"content": [{"type": "text", "text": "Done: changed the line in hello.txt; `false` exited with 1 as expected."}]}}
+{"type": "result", "subtype": "success", "is_error": false, "duration_ms": 16018, "num_turns": 4, "total_cost_usd": 0.237391, "permission_denials": [], "result": "DONE"}

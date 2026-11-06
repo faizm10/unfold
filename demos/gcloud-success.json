@@ -1,0 +1,608 @@
+{
+ "provider": "gcloud",
+ "description": "A Cloud Run source deploy of a small API that succeeds.",
+ "command": [
+  "gcloud",
+  "run",
+  "deploy",
+  "tiny-api",
+  "--source",
+  ".",
+  "--region",
+  "us-central1"
+ ],
+ "cwd": "~/projects/tiny-api",
+ "exitCode": 0,
+ "signal": null,
+ "interrupted": false,
+ "chunks": [
+  {
+   "t": 0,
+   "d": "Building using Dockerfile and deploying container to Cloud Run service [\u001b[1mtiny-api\u001b[22m] in project [\u001b[1macme-prod\u001b[22m] region [\u001b[1mus-central1\u001b[22m]\r\n"
+  },
+  {
+   "t": 200,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 280,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 360,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 440,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 520,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 600,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 680,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 760,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 760,
+   "d": "\u001b[2K\u001b[1G"
+  },
+  {
+   "t": 820,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 900,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 980,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1060,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1140,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1220,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1380,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1460,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1540,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1620,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1700,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1780,
+   "d": "\u001b[2K\u001b[1G  \u001b[32m✓\u001b[39m Uploading sources...\r\n"
+  },
+  {
+   "t": 1840,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 1920,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 2000,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 2080,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 2160,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 2240,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 2320,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 2400,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 2480,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 2560,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 2640,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 2720,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 2800,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 2880,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 2960,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 3040,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 3120,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 3200,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 3280,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 3360,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 3440,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 3520,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 3600,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 3680,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 3760,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 3840,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 3920,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 4000,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 4080,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 4160,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 4240,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 4320,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 4400,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 4480,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 4560,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 4640,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 4720,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 4800,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 4880,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 4960,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 5040,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 5120,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 5200,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 5280,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 5360,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 5440,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 5520,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 5600,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 5680,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 5760,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 5840,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 5920,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 6000,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 6080,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 6160,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 6240,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 6320,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 6400,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 6480,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 6560,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 6640,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 6720,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 6800,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 6880,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 6960,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 7040,
+   "d": "\u001b[2K\u001b[1G  \u001b[32m✓\u001b[39m Building Container... Logs are available at [ https://console.cloud.google.com/cloud-build/builds;region=us-central1/5c1f0e7a-3d2b-4e8a-9f61-0a7b2c4d6e18?project=482910374615 ].\r\n"
+  },
+  {
+   "t": 7100,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7180,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7260,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7340,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7420,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7500,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7580,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7660,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7740,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7820,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7900,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7980,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8060,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8140,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8220,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8380,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8460,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8540,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8620,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8700,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8780,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8860,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8940,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9020,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9100,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9180,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9260,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9340,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9420,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9500,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9580,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9660,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9740,
+   "d": "\u001b[2K\u001b[1G  \u001b[32m✓\u001b[39m Creating Revision...\r\n"
+  },
+  {
+   "t": 9800,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 9880,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 9960,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10040,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10120,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10200,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10280,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10360,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10440,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10520,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10600,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10680,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Routing traffic..."
+  },
+  {
+   "t": 10760,
+   "d": "\u001b[2K\u001b[1G  \u001b[32m✓\u001b[39m Routing traffic...\r\n"
+  },
+  {
+   "t": 10820,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Setting IAM Policy..."
+  },
+  {
+   "t": 10900,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Setting IAM Policy..."
+  },
+  {
+   "t": 10980,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Setting IAM Policy..."
+  },
+  {
+   "t": 11060,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Setting IAM Policy..."
+  },
+  {
+   "t": 11140,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Setting IAM Policy..."
+  },
+  {
+   "t": 11220,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Setting IAM Policy..."
+  },
+  {
+   "t": 11300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Setting IAM Policy..."
+  },
+  {
+   "t": 11380,
+   "d": "\u001b[2K\u001b[1G  \u001b[32m✓\u001b[39m Setting IAM Policy...\r\n"
+  },
+  {
+   "t": 11480,
+   "d": "Done.\r\n"
+  },
+  {
+   "t": 11560,
+   "d": "Service [\u001b[1mtiny-api\u001b[22m] revision [\u001b[1mtiny-api-00001-xof\u001b[22m] has been deployed and is serving \u001b[1m100\u001b[22m percent of traffic.\r\n"
+  },
+  {
+   "t": 11600,
+   "d": "Service URL: \u001b[1mhttps://tiny-api-482910374615.us-central1.run.app\u001b[22m\r\n"
+  }
+ ]
+}

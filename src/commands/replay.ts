@@ -30,9 +30,22 @@ export async function runReplay(file: string | undefined, flags: UiFlags, speed:
     save: false,
     waitForBrowser: true,
     run: async (session, term) => {
-      // Re-run the original lines through today's parser so parser fixes apply to old runs.
       const t0 = started.at;
       const start = Date.now();
+      const wait = async (at: number) => {
+        const ms = (at - t0) / speed - (Date.now() - start);
+        if (ms > 0) await new Promise((r) => setTimeout(r, Math.min(ms, 2000)));
+      };
+      if (provider.createPresenter) {
+        // Structured providers: raw events aren't saved, so replay the recorded events.
+        for (const e of events) {
+          if (e.type === 'log') await wait(e.line.at);
+          session.inject(e);
+        }
+        session.endReplay(ended?.exitCode ?? null, ended?.signal ?? null, ended?.interrupted ?? false);
+        return { exitCode: ended?.exitCode ?? null, signal: ended?.signal ?? null, interrupted: ended?.interrupted ?? false };
+      }
+      // Re-run the original lines through today's parser so parser fixes apply to old runs.
       for (const e of events) {
         if (e.type !== 'log') continue;
         const wait = (e.line.at - t0) / speed - (Date.now() - start);

@@ -11,6 +11,7 @@ export const vercel: Provider = {
   title: 'Vercel preview deploy',
   stages: VERCEL_STAGES,
   notes: VERCEL_NOTES,
+  install: 'Install it with `npm i -g vercel`, then run `vercel login`.',
 
   launch(userArgs) {
     const args = [...userArgs];

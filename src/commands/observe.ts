@@ -82,10 +82,23 @@ export async function observe(opts: ObserveOptions): Promise<number> {
     session.subscribe((_e, state) => panel.update(state));
     panel.start();
   }
+  const show = (chunk: string) => {
+    process.stdout.write(chunk);
+    panel?.afterChildOutput(chunk);
+  };
+  // Structured CLIs (JSON events) are shown as readable lines, not raw output.
+  const formatted = !!opts.provider.createPresenter;
+  if (formatted) {
+    let shown = 0;
+    session.subscribe((e) => {
+      if (e.type !== 'log' || e.line.seq <= shown) return;
+      shown = e.line.seq;
+      show(e.line.text.replace(/\r?\n/g, '\r\n') + '\r\n');
+    });
+  }
   const term: TerminalIO = {
     write(chunk) {
-      process.stdout.write(chunk);
-      panel?.afterChildOutput(chunk);
+      if (!formatted) show(chunk);
     },
     rows: () => panel?.childRows ?? (process.stdout.rows || 30),
     onRowsChange: (fn) => rowsListeners.add(fn),

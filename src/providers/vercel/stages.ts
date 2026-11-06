@@ -49,6 +49,9 @@ export const VERCEL_STAGES: StageDefinition[] = [
 ];
 
 export const VERCEL_NOTES: ProviderNotes = {
+  success: 'Deployed',
+  successHeadline: 'Preview is ready',
+  docsLabel: 'Vercel docs',
   interrupted:
     'You pressed Ctrl+C while this stage was in progress. That stops the CLI, but if the deployment had already been created, Vercel may keep building it. Check the Inspect URL.',
   unverified: "This run's output never confirmed this stage, so Unfold does not claim it happened.",

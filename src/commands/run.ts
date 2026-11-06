@@ -8,7 +8,7 @@ export async function runLive(provider: Provider, userArgs: string[], flags: UiF
   const spec = provider.launch(userArgs);
   const bin = which(spec.bin);
   if (!bin) {
-    say(`Could not find "${spec.bin}" on your PATH. Install it first (for Vercel: npm i -g vercel), then run vercel login.`);
+    say(`Could not find "${spec.bin}" on your PATH.${provider.install ? ` ${provider.install}` : ''}`);
     return 127;
   }
   for (const msg of provider.preflight?.(cwd) ?? []) say(msg);

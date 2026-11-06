@@ -28,11 +28,11 @@ export function glyph(st: StageState, s: Style, frame = 0): string {
   }
 }
 
-const OUTCOME: Record<FlowState['outcome'], string> = { running: 'Running', success: 'Deployed', failure: 'Failed', interrupted: 'Stopped' };
+const OUTCOME: Record<FlowState['outcome'], string> = { running: 'Running', success: 'Done', failure: 'Failed', interrupted: 'Stopped' };
 
 export function outcomeLabel(state: FlowState, s: Style): string {
   if (state.outcome === 'success' && state.stages.at(-1)?.status !== 'confirmed') return s.yellow('Exited 0, not confirmed');
-  const word = OUTCOME[state.outcome];
+  const word = state.outcome === 'success' ? (state.notes?.success ?? OUTCOME.success) : OUTCOME[state.outcome];
   return state.outcome === 'success' ? s.green(word) : state.outcome === 'failure' ? s.red(word) : state.outcome === 'interrupted' ? s.yellow(word) : s.cyan(word);
 }
 
@@ -108,16 +108,22 @@ export function summary(state: FlowState, logs: LogLine[], opts: { cols?: number
   }
   if (state.outcome === 'interrupted') {
     line();
-    line(
-      `  ${s.yellow('Stopped')} ${state.facts.some((f) => f.key === 'inspectUrl') ? 'The deployment had already been created, so Vercel may still finish it.' : 'No deployment had been created yet.'}`,
-    );
+    block(s.yellow('Stopped'), focusStage(state).note ?? 'Ctrl+C stopped the command before it finished.');
+  }
+
+  const highlights = (state.notes?.highlights ?? []).map((k) => state.facts.find((f) => f.key === k)).filter((f) => !!f);
+  if (highlights.length) {
+    line();
+    const kw = Math.max(...highlights.map((f) => f.label.length)) + 2;
+    for (const f of highlights)
+      wrapText(f.value, Math.max(20, cols - kw - 2)).forEach((l, n) => out.push(`  ${n === 0 ? s.dim(f.label) + ' '.repeat(kw - f.label.length) : ' '.repeat(kw)}${l}`));
   }
 
   const url = state.facts.find((f) => f.key === 'alias') ?? state.facts.find((f) => f.key === 'deploymentUrl');
-  const inspect = state.facts.find((f) => f.key === 'inspectUrl');
+  const inspect = state.facts.find((f) => f.key === 'inspectUrl' || f.key === 'logsUrl');
   if (url || inspect) line();
   if (url && state.outcome === 'success') line(`  ${s.dim('URL'.padEnd(8))}${s.cyan(url.value)}`);
-  if (inspect) line(`  ${s.dim('Inspect'.padEnd(8))}${inspect.value}`);
+  if (inspect) out.push(`  ${s.dim((inspect.key === 'logsUrl' ? 'Logs' : 'Inspect').padEnd(8))}${inspect.value}`);
 
   if (state.fix?.commands) {
     line();
@@ -129,10 +135,10 @@ export function summary(state: FlowState, logs: LogLine[], opts: { cols?: number
 
   // Output but nothing recognized: likely a CLI format Unfold doesn't know yet.
   if (state.endedAt && state.lineCount > 3 && state.stages.every((x) => x.status === 'unverified' || x.status === 'pending')) {
-    const version = state.facts.find((f) => f.key === 'cliVersion')?.value;
+    const version = state.facts.find((f) => f.key === 'cliVersion');
     line();
     for (const l of wrapText(
-      `Unfold didn't recognize any of this output${version ? ` (Vercel CLI ${version})` : ''}, so no stage is confirmed. If this was a normal deploy, please report it at https://github.com/faizm10/unfold/issues.`,
+      `Unfold didn't recognize any of this output${version ? ` (${version.label} ${version.value})` : ''}, so no stage is confirmed. If this was a normal run, please report it at https://github.com/faizm10/unfold/issues.`,
       cols - 4,
     ))
       out.push(`  ${s.yellow(l)}`);

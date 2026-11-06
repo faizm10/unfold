@@ -1,6 +1,6 @@
 {
   "name": "unfold-deploy",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Watch what happens after you hit Enter: live, explained flows for Vercel and Cloud Run deploys and Claude Code / Codex tasks, in your terminal.",
   "keywords": [
     "ai-agents",

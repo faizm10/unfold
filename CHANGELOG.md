@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.2.0 (2026-11-05)
 
 - `unfold gcloud`: Cloud Run deploys (`gcloud run deploy`) as Prepare → Build → Deploy → Live, with build and revision log links, troubleshooting links, and readable errors from gcloud's HTML error pages.
 - `unfold claude "<task>"` and `unfold codex "<task>"`: run Claude Code or Codex non-interactively and show Start → Explore → Change → Verify → Done, with files changed, checks run, the final answer and cost or tokens. Verify is only confirmed by a passing check.
@@ -8,7 +8,7 @@
 - New demos: `gcloud success`, `gcloud deploy-failure`, `claude success`, `codex checks-failing` (`unfold demo <provider> <name>`).
 - Summary headlines and labels now come from the provider ("Deployed", "Done", …).
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-11-05)
 
 First release.
 

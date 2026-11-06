@@ -1,15 +1,20 @@
 {
   "name": "unfold-deploy",
   "version": "0.1.0",
-  "description": "Watch what happens after you hit Enter: a live, explained flow of your Vercel deploys in the terminal.",
+  "description": "Watch what happens after you hit Enter: live, explained flows for Vercel and Cloud Run deploys and Claude Code / Codex tasks, in your terminal.",
   "keywords": [
-    "vercel",
-    "deploy",
+    "ai-agents",
+    "build-logs",
+    "claude-code",
     "cli",
-    "terminal",
-    "preview",
+    "cloud-run",
+    "codex",
+    "deploy",
     "devtools",
-    "build-logs"
+    "gcloud",
+    "preview",
+    "terminal",
+    "vercel"
   ],
   "homepage": "https://github.com/faizm10/unfold#readme",
   "bugs": {

@@ -22,6 +22,7 @@ npm run typecheck
 ```
 
 - `test/vercel-parser.test.ts`: the Vercel parser, line by line.
+- `test/providers.test.ts`: gcloud, Claude Code and Codex, partly from sanitized real runs in `test/fixtures/real/`.
 - `test/pipeline.test.ts`, `test/fix-prompt.test.ts`: demo transcripts through the full pipeline.
 - `test/tui.test.ts`: the terminal summary, live panel and explorer screens.
 - `test/e2e.test.ts`: runs the built `unfold` binary in a real pseudo-terminal against `test/fixtures/fake-vercel.mjs` and checks what a terminal displays. It needs node-pty and is skipped on Windows.
@@ -53,11 +54,13 @@ src/tui/           terminal views
 src/providers/
   provider.ts      the interface a provider implements
   vercel/          stage text, launch args, and the output parser
+  gcloud/          Cloud Run deploys (`gcloud run deploy`)
+  agents/          Claude Code and Codex (JSON event streams), plus shared stages
 src/ui/            the browser page (plain TypeScript, no framework)
 demos/             recorded transcripts (regenerate: node scripts/make-demos.mjs)
 ```
 
-To add a provider such as `gcloud`, add a `src/providers/gcloud/` folder with stage definitions, a `launch()` function and a parser that turns lines into `Signal`s, then register it in `src/providers/index.ts`. Nothing in `core/` needs to change.
+To add a provider (for example `netlify` or `fly`), add a `src/providers/<name>/` folder with stage definitions, a `launch()` function and a parser that turns lines into `Signal`s, then register it in `src/providers/index.ts`. `src/providers/gcloud/` is a compact example for text output. For CLIs that print JSON events, also implement `createPresenter()` (turns each event into a readable line, or hides it) and optionally `finish()` on the parser; see `src/providers/agents/`. Base parsers on real output: capture a run, remove anything personal, and add it to `test/fixtures/real/`.
 
 ## Supporting a new Vercel CLI output format
 

@@ -1,9 +1,10 @@
 import { readFileSync } from 'node:fs';
-import { runDemo, DEMO_NAMES } from './commands/demo.js';
+import { runDemo, DEMO_LIST } from './commands/demo.js';
 import { DEFAULT_FLAGS, type UiFlags } from './commands/observe.js';
 import { listRuns, runReplay } from './commands/replay.js';
 import { runLive } from './commands/run.js';
 import { runShow } from './commands/show.js';
+import { UsageError } from './core/errors.js';
 import { providers } from './providers/index.js';
 
 const VERSION = (JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { version: string }).version;
@@ -11,9 +12,14 @@ const VERSION = (JSON.parse(readFileSync(new URL('../package.json', import.meta.
 const HELP = `unfold — Watch what happens after you hit Enter.
 
 Usage
-  unfold vercel [vercel deploy flags]   Run a Vercel preview deploy with a live flow in your terminal
+  unfold vercel [vercel deploy flags]   Vercel preview deploy:  Prepare → Upload → Build → Preview
+  unfold gcloud [gcloud run deploy flags]
+                                         Cloud Run deploy:       Prepare → Build → Deploy → Live
+  unfold claude "<task>" [claude flags]  Claude Code task:       Start → Explore → Change → Verify → Done
+  unfold codex "<task>" [codex flags]    Codex task:             Start → Explore → Change → Verify → Done
   unfold show [run]                      Explore a run in the terminal (defaults to the latest)
-  unfold demo <name>                     Play a recorded demo (${DEMO_NAMES.join(', ')})
+  unfold demo [provider] <name>          Play a recorded demo, no account needed:
+                                         ${DEMO_LIST}
   unfold replay [run]                    Play a saved run again
   unfold runs                            List saved runs
 
@@ -30,12 +36,15 @@ Unfold options (anywhere on the line)
 Examples
   unfold vercel
   unfold vercel --fix claude
+  unfold gcloud --source . --region us-central1
+  unfold claude "fix the failing test" --allowedTools Read Edit Bash
+  unfold codex "add a --json flag to the CLI" --sandbox workspace-write
   unfold show
   unfold demo build-failure
+  unfold demo claude success
 `;
 
-/** A mistake in how Unfold was invoked: printed without a stack trace. */
-export class UsageError extends Error {}
+export { UsageError };
 
 /** Pulls Unfold's own flags out of argv; everything else goes to the wrapped CLI. */
 export function parseArgs(argv: string[]): { rest: string[]; flags: UiFlags; speed: number } {
@@ -92,7 +101,7 @@ async function run(argv: string[]): Promise<number> {
     case 'show':
       return runShow(rest[0], flags);
     case 'demo':
-      return runDemo(rest[0] ?? 'success', flags, speed);
+      return runDemo(rest, flags, speed);
     case 'replay':
       return runReplay(rest[0], flags, speed);
     case 'runs':

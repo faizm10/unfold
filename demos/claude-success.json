@@ -1,0 +1,72 @@
+{
+ "provider": "claude",
+ "description": "Claude Code fixes a failing test and confirms it with npm test.",
+ "command": [
+  "claude",
+  "-p",
+  "Fix the failing test",
+  "--permission-mode",
+  "acceptEdits",
+  "--output-format",
+  "stream-json",
+  "--verbose"
+ ],
+ "cwd": "/home/dev/tiny-app",
+ "exitCode": 0,
+ "signal": null,
+ "interrupted": false,
+ "chunks": [
+  {
+   "t": 300,
+   "d": "{\"type\":\"system\",\"subtype\":\"init\",\"cwd\":\"/home/dev/tiny-app\",\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\",\"model\":\"claude-opus-5-5\",\"permissionMode\":\"acceptEdits\",\"claude_code_version\":\"2.1.292\",\"tools\":[\"Read\",\"Edit\",\"Bash\"]}\r\n"
+  },
+  {
+   "t": 1800,
+   "d": "{\"type\":\"assistant\",\"message\":{\"content\":[{\"type\":\"text\",\"text\":\"I'll look at the code and run the tests first.\"}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 2700,
+   "d": "{\"type\":\"assistant\",\"message\":{\"content\":[{\"type\":\"tool_use\",\"id\":\"t1\",\"name\":\"Read\",\"input\":{\"file_path\":\"/home/dev/tiny-app/sum.js\"}}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 3000,
+   "d": "{\"type\":\"user\",\"message\":{\"content\":[{\"type\":\"tool_result\",\"tool_use_id\":\"t1\",\"content\":\"1\\texport function sum(a, b) {\\n2\\t  return a - b;\\n3\\t}\\n\",\"is_error\":false}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 4200,
+   "d": "{\"type\":\"assistant\",\"message\":{\"content\":[{\"type\":\"tool_use\",\"id\":\"t2\",\"name\":\"Bash\",\"input\":{\"command\":\"npm test\",\"description\":\"Run the tests\"}}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 6000,
+   "d": "{\"type\":\"user\",\"message\":{\"content\":[{\"type\":\"tool_result\",\"tool_use_id\":\"t2\",\"content\":\"Exit code 1\\nAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\\n\\n-1 !== 5\\n\",\"is_error\":true}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 7400,
+   "d": "{\"type\":\"assistant\",\"message\":{\"content\":[{\"type\":\"text\",\"text\":\"`sum` subtracts instead of adding. Fixing it.\"}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 8500,
+   "d": "{\"type\":\"assistant\",\"message\":{\"content\":[{\"type\":\"tool_use\",\"id\":\"t3\",\"name\":\"Edit\",\"input\":{\"file_path\":\"/home/dev/tiny-app/sum.js\",\"old_string\":\"return a - b;\",\"new_string\":\"return a + b;\"}}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 8800,
+   "d": "{\"type\":\"user\",\"message\":{\"content\":[{\"type\":\"tool_result\",\"tool_use_id\":\"t3\",\"content\":\"The file /home/dev/tiny-app/sum.js has been updated.\",\"is_error\":false}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 9700,
+   "d": "{\"type\":\"assistant\",\"message\":{\"content\":[{\"type\":\"tool_use\",\"id\":\"t4\",\"name\":\"Bash\",\"input\":{\"command\":\"npm test\",\"description\":\"Run the tests again\"}}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 11400,
+   "d": "{\"type\":\"user\",\"message\":{\"content\":[{\"type\":\"tool_result\",\"tool_use_id\":\"t4\",\"content\":\"> tiny-app@1.0.0 test\\n> node test.js\\n\\nok\\n\",\"is_error\":false}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 12600,
+   "d": "{\"type\":\"assistant\",\"message\":{\"content\":[{\"type\":\"text\",\"text\":\"Fixed `sum` in sum.js: it returned `a - b` instead of `a + b`. `npm test` now passes.\"}]},\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  },
+  {
+   "t": 12800,
+   "d": "{\"type\":\"result\",\"subtype\":\"success\",\"is_error\":false,\"duration_ms\":13800,\"num_turns\":6,\"result\":\"Fixed `sum` in sum.js: it returned `a - b` instead of `a + b`. `npm test` now passes.\",\"total_cost_usd\":0.1876,\"permission_denials\":[],\"session_id\":\"7b1c2d3e-4f50-4a6b-8c7d-9e0f1a2b3c4d\"}\r\n"
+  }
+ ]
+}

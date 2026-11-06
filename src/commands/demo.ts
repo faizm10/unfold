@@ -19,20 +19,34 @@ export interface Transcript {
 }
 
 export const DEMOS_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'demos');
-export const DEMO_NAMES = ['success', 'build-failure', 'interrupted'] as const;
+/** Demos per provider; the first provider's demos also work without naming it. */
+export const DEMOS: Record<string, string[]> = {
+  vercel: ['success', 'build-failure', 'interrupted'],
+  gcloud: ['success', 'deploy-failure'],
+  claude: ['success'],
+  codex: ['checks-failing'],
+};
+export const DEMO_LIST = Object.entries(DEMOS)
+  .flatMap(([p, names]) => names.map((n) => `${p} ${n}`))
+  .join(', ');
 
-export function loadDemo(name: string): Transcript {
-  return JSON.parse(readFileSync(join(DEMOS_DIR, `vercel-${name}.json`), 'utf8')) as Transcript;
+/** Loads `vercel-success.json` from `loadDemo('success')` or `loadDemo('gcloud', 'success')`. */
+export function loadDemo(providerOrName: string, name?: string): Transcript {
+  const file = name ? `${providerOrName}-${name}` : `vercel-${providerOrName}`;
+  return JSON.parse(readFileSync(join(DEMOS_DIR, `${file}.json`), 'utf8')) as Transcript;
 }
 
-export async function runDemo(name: string, flags: UiFlags, speed: number): Promise<number> {
-  if (!(DEMO_NAMES as readonly string[]).includes(name)) {
-    say(`Unknown demo "${name}". Try: ${DEMO_NAMES.join(', ')}`);
+export async function runDemo(args: string[], flags: UiFlags, speed: number): Promise<number> {
+  const [first = 'success', second] = args;
+  const providerId = DEMOS[first] ? first : 'vercel';
+  const name = DEMOS[first] ? (second ?? DEMOS[first]![0]!) : first;
+  if (!DEMOS[providerId]!.includes(name)) {
+    say(`Unknown demo "${args.join(' ')}". Try one of: ${DEMO_LIST}`);
     return 2;
   }
-  const t = loadDemo(name);
+  const t = loadDemo(providerId, name);
   const provider = providers[t.provider]!;
-  say(`Demo: ${t.description} Recorded output, no Vercel account or network needed.`);
+  say(`Demo: ${t.description} Recorded output; no account or network needed.`);
   return observe({
     provider,
     command: t.command,

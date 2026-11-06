@@ -1,0 +1,616 @@
+{
+ "provider": "gcloud",
+ "description": "A Cloud Run deploy whose container never starts listening on $PORT.",
+ "command": [
+  "gcloud",
+  "run",
+  "deploy",
+  "tiny-api",
+  "--source",
+  ".",
+  "--region",
+  "us-central1"
+ ],
+ "cwd": "~/projects/tiny-api",
+ "exitCode": 1,
+ "signal": null,
+ "interrupted": false,
+ "chunks": [
+  {
+   "t": 0,
+   "d": "Building using Dockerfile and deploying container to Cloud Run service [\u001b[1mtiny-api\u001b[22m] in project [\u001b[1macme-prod\u001b[22m] region [\u001b[1mus-central1\u001b[22m]\r\n"
+  },
+  {
+   "t": 200,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 280,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 360,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 440,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 520,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 600,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 680,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 760,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building and deploying new service... Uploading sources."
+  },
+  {
+   "t": 760,
+   "d": "\u001b[2K\u001b[1G"
+  },
+  {
+   "t": 820,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 900,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 980,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1060,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1140,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1220,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1380,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1460,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1540,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1620,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1700,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Uploading sources..."
+  },
+  {
+   "t": 1780,
+   "d": "\u001b[2K\u001b[1G  \u001b[32m✓\u001b[39m Uploading sources...\r\n"
+  },
+  {
+   "t": 1840,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 1920,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 2000,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 2080,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 2160,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 2240,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 2320,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 2400,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 2480,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 2560,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 2640,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 2720,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 2800,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 2880,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 2960,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 3040,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 3120,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 3200,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 3280,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 3360,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 3440,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 3520,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 3600,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 3680,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 3760,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 3840,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 3920,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 4000,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 4080,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 4160,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 4240,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 4320,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 4400,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 4480,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 4560,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 4640,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 4720,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 4800,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 4880,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 4960,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 5040,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 5120,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 5200,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 5280,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 5360,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 5440,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 5520,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 5600,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 5680,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 5760,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 5840,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 5920,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 6000,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 6080,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 6160,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 6240,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Building Container..."
+  },
+  {
+   "t": 6320,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Building Container..."
+  },
+  {
+   "t": 6400,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Building Container..."
+  },
+  {
+   "t": 6480,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Building Container..."
+  },
+  {
+   "t": 6560,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Building Container..."
+  },
+  {
+   "t": 6640,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Building Container..."
+  },
+  {
+   "t": 6720,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Building Container..."
+  },
+  {
+   "t": 6800,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Building Container..."
+  },
+  {
+   "t": 6880,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Building Container..."
+  },
+  {
+   "t": 6960,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Building Container..."
+  },
+  {
+   "t": 7040,
+   "d": "\u001b[2K\u001b[1G  \u001b[32m✓\u001b[39m Building Container... Logs are available at [ https://console.cloud.google.com/cloud-build/builds;region=us-central1/5c1f0e7a-3d2b-4e8a-9f61-0a7b2c4d6e18?project=482910374615 ].\r\n"
+  },
+  {
+   "t": 7100,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7180,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7260,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7340,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7420,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7500,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7580,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7660,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7740,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7820,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7900,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 7980,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8060,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8140,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8220,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8380,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8460,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8540,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8620,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8700,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8780,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8860,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 8940,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9020,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9100,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9180,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9260,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9340,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9420,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9500,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9580,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9660,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9740,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9820,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9900,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 9980,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10060,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10140,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10220,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10300,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10380,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10460,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10540,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠸\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10620,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠼\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10700,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠴\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10780,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠦\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10860,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠧\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 10940,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠇\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 11020,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠏\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 11100,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠋\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 11180,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠙\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 11260,
+   "d": "\u001b[2K\u001b[1G\u001b[36m⠹\u001b[39m Creating Revision..."
+  },
+  {
+   "t": 11340,
+   "d": "\u001b[2K\u001b[1G  \u001b[31mX\u001b[39m Creating Revision...\r\n"
+  },
+  {
+   "t": 11380,
+   "d": "  . Routing traffic...\r\n"
+  },
+  {
+   "t": 11580,
+   "d": "Deployment failed\r\n"
+  },
+  {
+   "t": 11640,
+   "d": "\u001b[31mERROR:\u001b[39m (gcloud.run.deploy) Revision 'tiny-api-00002-wuv' is not ready and cannot serve traffic. The user-provided container failed to start and listen on the port defined provided by the PORT=8080 environment variable within the allocated timeout. This can happen when the port is misconfigured or if the timeout is too short. The health check timeout can be extended. Logs for this revision might contain more information.\r\n"
+  },
+  {
+   "t": 11660,
+   "d": "\r\n"
+  },
+  {
+   "t": 11680,
+   "d": "Logs URL: https://console.cloud.google.com/logs/viewer?project=acme-prod&resource=cloud_run_revision/service_name/tiny-api/revision_name/tiny-api-00002-wuv\r\n"
+  },
+  {
+   "t": 11700,
+   "d": "For more troubleshooting guidance, see https://cloud.google.com/run/docs/troubleshooting#container-failed-to-start\r\n"
+  }
+ ]
+}

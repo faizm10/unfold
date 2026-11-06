@@ -1,0 +1,60 @@
+{
+  "name": "unfold-deploy",
+  "version": "0.1.0",
+  "description": "Watch what happens after you hit Enter: a live, explained flow of your Vercel deploys in the terminal.",
+  "keywords": [
+    "vercel",
+    "deploy",
+    "cli",
+    "terminal",
+    "preview",
+    "devtools",
+    "build-logs"
+  ],
+  "homepage": "https://github.com/faizm10/unfold#readme",
+  "bugs": {
+    "url": "https://github.com/faizm10/unfold/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/faizm10/unfold.git"
+  },
+  "license": "MIT",
+  "author": "faizm10",
+  "type": "module",
+  "bin": {
+    "unfold": "bin/unfold.js"
+  },
+  "files": [
+    "bin",
+    "dist",
+    "demos",
+    "scripts/postinstall.mjs",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/clean.mjs && tsc -p tsconfig.json && node scripts/copy-ui.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "pretest": "npm run build",
+    "test": "vitest run",
+    "postinstall": "node scripts/postinstall.mjs",
+    "prepublishOnly": "npm test",
+    "demo:success": "npm run build && node bin/unfold.js demo success",
+    "demo:failure": "npm run build && node bin/unfold.js demo build-failure",
+    "demo:interrupted": "npm run build && node bin/unfold.js demo interrupted"
+  },
+  "optionalDependencies": {
+    "node-pty": "1.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@xterm/headless": "^5.5.0",
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8"
+  }
+}
